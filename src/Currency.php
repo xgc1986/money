@@ -105,24 +105,18 @@ class Currency
      */
     public function getConversions(array $currencies): array
     {
-
-        if (\count($currencies) > 20) {
-            // TODO throw a warning
-            $currencies = \array_slice($currencies, 0, 20);
-        }
+        $currencies = \array_slice($currencies, 0, 20);
 
         $list = [];
         foreach ($currencies as $currency) {
             $list[] = $currency->getName();
         }
 
-        $data = \implode(',', $list);
-
         $client   = new Client(['base_uri' => 'https://min-api.cryptocompare.com']);
         $response = $client->request('GET', '/data/price', [
             'query' => [
                 'fsym'  => $this->name,
-                'tsyms' => $data
+                'tsyms' => \implode(',', $list)
             ]
         ]);
 

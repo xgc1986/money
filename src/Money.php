@@ -197,15 +197,11 @@ class Money implements Serializable
      */
     public function g(Money $money, bool $conversion = false): bool
     {
-        if (!$conversion && $this->currency !== $money->currency) {
-            throw new InvalidComparisonException();
+        if (!$conversion) {
+            $this->checkSameCurrency($money);
         }
 
-        if ($conversion && $this->currency !== $money->currency) {
-            $money = $money->changeCurrency($this->currency);
-        }
-
-        return $this->amount->isGreaterThan($money->getAmount());
+        return $this->amount->isGreaterThan($money->changeCurrency($this->currency)->getAmount());
     }
 
     /**
@@ -220,15 +216,11 @@ class Money implements Serializable
      */
     public function e(Money $money, bool $conversion = false): bool
     {
-        if (!$conversion && $this->currency !== $money->currency) {
-            throw new InvalidComparisonException();
+        if (!$conversion) {
+            $this->checkSameCurrency($money);
         }
 
-        if ($conversion && $this->currency !== $money->currency) {
-            $money = $money->changeCurrency($this->currency);
-        }
-
-        return $this->amount->isEqualTo($money->getAmount());
+        return $this->amount->isEqualTo($money->changeCurrency($this->currency)->getAmount());
     }
 
     /**
@@ -243,15 +235,11 @@ class Money implements Serializable
      */
     public function l(Money $money, bool $conversion = false): bool
     {
-        if (!$conversion && $this->currency !== $money->currency) {
-            throw new InvalidComparisonException();
+        if (!$conversion) {
+            $this->checkSameCurrency($money);
         }
 
-        if ($conversion && $this->currency !== $money->currency) {
-            $money = $money->changeCurrency($this->currency);
-        }
-
-        return $this->amount->isLessThan($money->getAmount());
+        return $this->amount->isLessThan($money->changeCurrency($this->currency)->getAmount());
     }
 
     /**
@@ -305,6 +293,18 @@ class Money implements Serializable
         }
 
         return BigDecimal::of($amount ?? 0);
+    }
+
+    /**
+     * @param Money $money
+     *
+     * @throws InvalidComparisonException
+     */
+    public function checkSameCurrency(Money $money)
+    {
+        if ($this->currency !== $money->currency) {
+            throw new InvalidComparisonException();
+        }
     }
 
     /**
