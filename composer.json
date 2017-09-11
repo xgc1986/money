@@ -1,0 +1,57 @@
+{
+  "name": "xgc/money",
+  "license": "MIT",
+  "description": "A money class",
+  "keywords": [
+    "php",
+    "php.ini"
+  ],
+  "authors": [
+    {
+      "email": "xgc1986@gmail.com",
+      "name": "Javier González Cuadrado"
+    }
+  ],
+  "type": "library",
+  "minimum-stability": "stable",
+  "config": {
+    "bin-dir": "bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xgc\\Money\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "guzzlehttp/guzzle": "^6.3",
+    "brick/math": "^0.6.0",
+    "nesbot/carbon": "^1.22"
+  },
+  "require-dev": {
+    "bruli/php-git-hooks": "~5.1",
+    "phpunit/phpunit": "~6.2"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "PhpGitHooks\\Infrastructure\\Composer\\ConfiguratorScript::buildConfig"
+    ],
+    "post-update-cmd": [
+      "PhpGitHooks\\Infrastructure\\Composer\\ConfiguratorScript::buildConfig"
+    ]
+  },
+  "archive": {
+    "exclude": [
+      "!vendor",
+      "tests",
+      "*phpunit.xml",
+      ".travis.yml",
+      "php-git-hooks.yml"
+    ]
+  }
+}
