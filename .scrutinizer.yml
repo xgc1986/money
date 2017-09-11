@@ -7,8 +7,11 @@ build:
           file: 'coverage.clover'
           format: 'clover'
 
-
 checks:
   php:
     code_rating: true
     duplication: true
+
+filter:
+  excluded_paths:
+    - "tests/"

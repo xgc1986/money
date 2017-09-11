@@ -337,6 +337,8 @@ class Money implements Serializable
      */
     public function unserialize($serialized): void
     {
+        $curr = null;
+
         [
             $this->amount,
             $curr
